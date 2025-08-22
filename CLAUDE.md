@@ -30,14 +30,15 @@ python aws-free.py
 # Instance management
 python aws-free.py create [key_name] [region]    # Create new instance
 python aws-free.py list [region]                 # List all instances
-python aws-free.py delete <instance_id> [region] # Delete instance
+python aws-free.py delete [instance_id] [region] # Delete instance
 python aws-free.py ssh [instance_id] [region]    # SSH to instance
 python aws-free.py web [region]                  # Open AWS web console in browser
 
 # Examples
+python aws-free.py create                        # Create instance with default settings
 python aws-free.py create my-key us-east-1       # Create with key pair in specific region
 python aws-free.py ssh                           # Interactive SSH - lists running instances
-python aws-free.py delete i-1234567890           # Delete specific instance
+python aws-free.py delete                        # Interactive delete - shows available instances
 python aws-free.py web                           # Open AWS EC2 console
 ```
 
