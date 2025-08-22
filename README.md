@@ -46,6 +46,9 @@ python aws-free.py ssh
 # Delete an instance
 python aws-free.py delete
 
+# Open AWS Key Pairs console
+python aws-free.py key
+
 # Open AWS Web Console
 python aws-free.py web
 ```
@@ -58,6 +61,7 @@ python aws-free.py web
 | `create` | Create free-tier instance |
 | `delete` | Delete free-tier instance |
 | `ssh` | SSH to free-tier instance |
+| `key` | Open AWS Key Pairs console |
 | `web` | Open AWS Web Console |
 | `help` | Show help |
 
@@ -155,6 +159,7 @@ AWS_SECRET_ACCESS_KEY=your_secret_access_key
 
 ### SSH Key Issues
 - Keys are automatically generated during instance creation
+- Use `python aws-free.py key` to manage key pairs via AWS console
 - Use `python aws-free.py web` to view instances in AWS console
 - Keys are stored locally in ~/.ssh/ for better security
 - Ensure ssh-keygen is installed on your system
