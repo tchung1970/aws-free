@@ -46,9 +46,6 @@ python aws-free.py ssh
 # Delete an instance
 python aws-free.py delete
 
-# Open AWS Key Pairs console
-python aws-free.py key
-
 # Open AWS Instances console
 python aws-free.py web
 ```
@@ -61,7 +58,6 @@ python aws-free.py web
 | `create` | Create free-tier instance |
 | `delete` | Delete free-tier instance |
 | `ssh` | SSH to free-tier instance |
-| `key` | Open AWS Key Pairs console |
 | `web` | Open AWS Instances console |
 | `help` | Show help |
 

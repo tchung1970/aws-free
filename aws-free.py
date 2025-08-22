@@ -499,23 +499,6 @@ def open_console(region='us-west-2'):
         print()
 
 
-def open_key_pairs(region='us-west-2'):
-    """Open AWS Key Pairs console in browser"""
-    key_pairs_url = f"https://{region}.console.aws.amazon.com/ec2/home?region={region}#KeyPairs:"
-    
-    print(f"🔑 Opening AWS Key Pairs console for region {region}...")
-    print(f"URL: {key_pairs_url}")
-    
-    try:
-        webbrowser.open(key_pairs_url)
-        print("✅ Key Pairs console opened in your default browser")
-        print()
-    except Exception as e:
-        print(f"⚠️  Could not open browser automatically: {e}")
-        print(f"Please copy and paste this URL into your browser:")
-        print(f"{key_pairs_url}")
-        print()
-
 
 def delete_instance(instance_id, region='us-west-2'):
     """Delete (terminate) an EC2 instance"""
@@ -767,7 +750,7 @@ def main():
     # Command line argument parsing
     if len(sys.argv) > 1:
         # Check for multiple commands (invalid usage)
-        commands = ['list', 'create', 'delete', 'ssh', 'key', 'web', 'instances', 'console', 'dashboard', 'help', '-h', '--help']
+        commands = ['list', 'create', 'delete', 'ssh', 'web', 'instances', 'console', 'dashboard', 'help', '-h', '--help']
         provided_commands = [arg for arg in sys.argv[1:] if arg.lower() in commands]
         
         if len(provided_commands) > 1:
@@ -779,7 +762,6 @@ def main():
             print("  create    # Create free-tier instance")
             print("  delete    # Delete free-tier instance")
             print("  ssh       # SSH to free-tier instance")
-            print("  key       # Open AWS Key Pairs console")
             print("  web       # Open AWS Instances console")
             print("  help      # Show this help")
             print("\nNote: All instances will be free tier eligible")
@@ -797,7 +779,6 @@ def main():
             print("  create    # Create a new instance (default)")
             print("  delete    # Delete free-tier instance")
             print("  ssh       # SSH to free-tier instance")
-            print("  key       # Open AWS Key Pairs console")
             print("  web       # Open AWS Instances console")
             print("  help      # Show this help")
             print("\nNote: All instances will be free tier eligible")
@@ -867,10 +848,6 @@ def main():
             ssh_to_instance(instance_id, region)
             return
         
-        elif command == 'key':
-            open_key_pairs(region)
-            return
-        
         elif command in ['dashboard', 'console', 'instances', 'web']:
             open_console(region)
             return
@@ -912,7 +889,6 @@ def main():
         print("  create    # Create free-tier instance")
         print("  delete    # Delete free-tier instance")
         print("  ssh       # SSH to free-tier instance")
-        print("  key       # Open AWS Key Pairs console")
         print("  web       # Open AWS Instances console")
         print("  help      # Show this help")
         print("\nNote: All instances will be free tier eligible")
