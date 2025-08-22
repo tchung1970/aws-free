@@ -78,15 +78,17 @@ python aws-free.py web
 - **RSA 2048-bit**: Uses RSA 2048-bit keys for maximum compatibility
 
 ### Command Interface Updates
-- **Consistent Naming**: Updated command naming for consistency
-  - `key` command opens AWS Key Pairs console
-  - `web` command opens AWS Instances console (replaces `console`)
-- **Backward Compatibility**: Old commands (`console`, `dashboard`) still work
+- **Streamlined Commands**: Removed unnecessary `key` command since keys are managed locally
+- **Consistent Naming**: `web` command opens AWS Web Console (replaces `console`)
+- **Backward Compatibility**: Old commands (`console`, `dashboard`, `instances`) still work
 - **Improved Help**: Better formatted help messages with consistent spacing
+- **Focused Interface**: Clean command set focusing on essential instance management
 
 ### Dependency Management
 - **AWS CLI Support**: Added automatic AWS CLI installation and checking
+- **GitHub CLI Requirement**: GitHub CLI (gh) is now required for repository management
 - **Updated Requirements**: Added `awscli>=1.27.0` to requirements.txt
+- **Platform-Specific Guidance**: Provides installation instructions for different operating systems
 - **Better Error Handling**: Improved dependency installation feedback
 
 ### User Experience Enhancements
@@ -104,7 +106,6 @@ python aws-free.py web
 - **`delete_instance()`**: Safe deletion with confirmation
 - **`ssh_to_instance()`**: Interactive SSH with automatic instance selection
 - **`create_key_pair()`**: Generates SSH keys locally and imports public key to AWS
-- **`open_key_pairs()`**: Opens AWS Key Pairs console in browser
 - **`open_console()`**: Opens AWS EC2 console in browser
 
 ### Free Tier Enforcement
@@ -124,6 +125,7 @@ python aws-free.py web
 - boto3 (AWS SDK for Python)
 - python-dotenv (environment variable management)
 - awscli (AWS Command Line Interface)
+- gh (GitHub CLI) - required for repository management
 - ssh-keygen (for key pair generation)
 
 ## AWS Permissions Required

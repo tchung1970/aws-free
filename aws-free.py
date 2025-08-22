@@ -6,25 +6,26 @@
 # AWS Free Tier Instance Manager - Complete lifecycle management for EC2 free tier instances
 #
 # What this script does step by step:
-# 1. Checks and auto-installs dependencies (boto3, python-dotenv, awscli)
+# 1. Checks and auto-installs dependencies (boto3, python-dotenv, awscli) and validates GitHub CLI
 # 2. Validates AWS credentials from ~/.env file
 # 3. Provides command-line interface for:
 #    - Creating t3.micro instances with Ubuntu Server 24.04 LTS
 #    - Listing all running instances in formatted table
 #    - Deleting instances with confirmation prompts
-#    - SSH access to running instances with automatic key management
-#    - Opening AWS console pages (instances and key pairs) in browser
+#    - SSH access to running instances with local key management
+#    - Opening AWS web console in browser
 # 4. Enforces free tier limits (max 1 t3.micro instance at a time)
-# 5. Generates SSH key pairs locally and imports public keys to AWS
+# 5. Generates SSH key pairs locally using ssh-keygen and imports public keys to AWS
 # 6. Creates security groups with SSH access automatically
 # 7. Handles all AWS API interactions with proper error handling
 #
 # Key features:
 # - Free tier enforcement to prevent accidental charges
-# - Local SSH key generation for better security
-# - Smart dependency management with user consent
-# - Clean command interface with backward compatibility
+# - Local SSH key generation for enhanced security
+# - Smart dependency management including GitHub CLI
+# - Streamlined command interface with essential operations
 # - Comprehensive error handling and user guidance
+# - Platform-specific installation instructions
 
 """
 EC2 Free Tier Instance Launcher
