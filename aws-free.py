@@ -73,6 +73,14 @@ def check_dependencies():
         missing_display.append('awscli (AWS Command Line Interface)')
         missing_tools.append('AWS CLI')
     
+    # Check for GitHub CLI
+    try:
+        subprocess.check_output(['gh', '--version'], stderr=subprocess.STDOUT)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        missing_tools.append('GitHub CLI')
+        print("⚠️  GitHub CLI (gh) not found but recommended for repository management")
+        print("   Install with: brew install gh (macOS) or visit https://cli.github.com/")
+    
     if missing_deps:
         print("❌ Missing required dependencies:")
         for dep in missing_display:
@@ -103,6 +111,13 @@ def check_dependencies():
                         print("✅ AWS CLI is now available")
                     except (subprocess.CalledProcessError, FileNotFoundError):
                         print("✅ AWS CLI installed but may need PATH refresh")
+                        
+                    # Check GitHub CLI again
+                    try:
+                        subprocess.check_output(['gh', '--version'], stderr=subprocess.STDOUT)
+                        print("✅ GitHub CLI is available")
+                    except (subprocess.CalledProcessError, FileNotFoundError):
+                        print("💡 GitHub CLI not found - install with: brew install gh")
                         
                 except ImportError as e:
                     print(f"❌ Failed to import dependencies after installation: {e}")
