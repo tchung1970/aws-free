@@ -46,7 +46,7 @@ python aws-free.py ssh
 # Delete an instance
 python aws-free.py delete
 
-# Open AWS Instances console
+# Open AWS Web Console
 python aws-free.py web
 ```
 
@@ -58,7 +58,7 @@ python aws-free.py web
 | `create` | Create free-tier instance |
 | `delete` | Delete free-tier instance |
 | `ssh` | SSH to free-tier instance |
-| `web` | Open AWS Instances console |
+| `web` | Open AWS Web Console |
 | `help` | Show help |
 
 ## Default Configuration
