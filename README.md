@@ -168,6 +168,11 @@ AWS_SECRET_ACCESS_KEY=your_secret_access_key
 4. Test thoroughly
 5. Submit a pull request
 
+## Author
+
+Thomas Chung  
+Created: August 22, 2025
+
 ## License
 
-[Add your license here]
+This project is open source and available under the MIT License.
