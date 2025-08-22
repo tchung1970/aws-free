@@ -74,12 +74,12 @@ def check_dependencies():
         missing_tools.append('AWS CLI')
     
     # Check for GitHub CLI
+    gh_missing = False
     try:
         subprocess.check_output(['gh', '--version'], stderr=subprocess.STDOUT)
     except (subprocess.CalledProcessError, FileNotFoundError):
+        gh_missing = True
         missing_tools.append('GitHub CLI')
-        print("⚠️  GitHub CLI (gh) not found but recommended for repository management")
-        print("   Install with: brew install gh (macOS) or visit https://cli.github.com/")
     
     if missing_deps:
         print("❌ Missing required dependencies:")
@@ -130,6 +130,18 @@ def check_dependencies():
         else:
             print("Please install the required dependencies and run the script again.")
             sys.exit(1)
+    
+    # Handle GitHub CLI separately since it's not a pip package
+    if gh_missing:
+        print("\n❌ Missing required tool:")
+        print("   - GitHub CLI (gh)")
+        print("\n📦 To install GitHub CLI:")
+        print("   macOS: brew install gh")
+        print("   Linux: https://cli.github.com/")
+        print("   Windows: https://cli.github.com/")
+        
+        print("\n💡 GitHub CLI is required for repository management features")
+        sys.exit(1)
 
 # Check dependencies before importing AWS modules
 check_dependencies()
