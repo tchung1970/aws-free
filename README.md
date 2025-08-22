@@ -155,7 +155,8 @@ AWS_SECRET_ACCESS_KEY=your_secret_access_key
 
 ### SSH Key Issues
 - Keys are automatically generated during instance creation
-- Use `python aws-free.py key` to manage keys via AWS console
+- Use `python aws-free.py web` to view instances in AWS console
+- Keys are stored locally in ~/.ssh/ for better security
 - Ensure ssh-keygen is installed on your system
 
 ## Contributing
