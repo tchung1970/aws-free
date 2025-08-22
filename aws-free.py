@@ -612,29 +612,73 @@ def launch_instance(region='us-west-2', key_name=None):
             
             return None
         
-        # Check if we need to create a key pair first
+        # Always ensure we have a fresh, synchronized key pair
         if not key_name:
-            # Check if aws_ec2_free key pair already exists
+            key_name = "aws_ec2_free"
             private_key_path = os.path.expanduser('~/.ssh/aws_ec2_free')
             public_key_path = os.path.expanduser('~/.ssh/aws_ec2_free.pub')
             
-            if os.path.exists(private_key_path) and os.path.exists(public_key_path):
-                print(f"\n✅ Found existing SSH key pair: aws_ec2_free")
-                key_name = "aws_ec2_free"
-            else:
-                create_key = input("\n🔑 SSH key pair (aws_ec2_free) not found. Create it now? (Y/n): ").strip().lower()
+            # Check if local keys exist and if AWS key pair exists
+            local_keys_exist = os.path.exists(private_key_path) and os.path.exists(public_key_path)
+            aws_key_exists = False
+            
+            try:
+                ec2_client.describe_key_pairs(KeyNames=[key_name])
+                aws_key_exists = True
+                print(f"🔍 Found existing AWS key pair: {key_name}")
+            except ClientError as e:
+                if 'InvalidKeyPair.NotFound' in str(e):
+                    print(f"🔍 AWS key pair '{key_name}' not found")
+                else:
+                    print(f"⚠️  Error checking AWS key pair: {e}")
+            
+            # Determine what to do based on key states
+            if local_keys_exist and aws_key_exists:
+                print(f"✅ Using existing synchronized key pair: {key_name}")
+            elif local_keys_exist and not aws_key_exists:
+                print(f"🔄 Local keys found but AWS key missing. Re-importing to AWS...")
+                try:
+                    # Read the public key and import it
+                    with open(public_key_path, 'r') as pub_file:
+                        public_key_material = pub_file.read().strip()
+                    
+                    ec2_client.import_key_pair(
+                        KeyName=key_name,
+                        PublicKeyMaterial=public_key_material
+                    )
+                    print(f"✅ Re-imported public key to AWS as: {key_name}")
+                except Exception as e:
+                    print(f"⚠️  Failed to import existing key to AWS: {e}")
+                    print("Will create new keys...")
+                    local_keys_exist = False
+            elif not local_keys_exist:
+                create_key = input(f"\n🔑 SSH key pair ({key_name}) not found locally. Create new keys? (Y/n): ").strip().lower()
                 
                 if create_key in ['y', 'yes', '']:
-                    key_name = "aws_ec2_free"
+                    # Remove old AWS key if it exists
+                    if aws_key_exists:
+                        try:
+                            ec2_client.delete_key_pair(KeyName=key_name)
+                            print(f"🗑️  Removed old AWS key pair: {key_name}")
+                        except Exception as e:
+                            print(f"⚠️  Could not remove old AWS key: {e}")
+                    
+                    # Remove old local keys if they exist
+                    for path in [private_key_path, public_key_path]:
+                        if os.path.exists(path):
+                            os.remove(path)
+                            print(f"🗑️  Removed old local key: {path}")
+                    
                     try:
                         key_name = create_key_pair(ec2_client, key_name)
-                        print(f"✅ Key pair '{key_name}' will be used for SSH access")
+                        print(f"✅ Created fresh key pair '{key_name}' for SSH access")
                     except Exception as e:
                         print(f"⚠️  Failed to create key pair: {e}")
                         print("Continuing without key pair - SSH access won't be available")
                         key_name = None
                 else:
                     print("Continuing without key pair - SSH access won't be available")
+                    key_name = None
 
         # Get latest Ubuntu Server 24.04 LTS AMI
         print("\nFinding latest Ubuntu Server 24.04 LTS AMI...")
