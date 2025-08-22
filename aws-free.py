@@ -962,7 +962,7 @@ def main():
         print("  web       # Open AWS Web Console")
         print("  help      # Show this help")
         print("\nNote: All instances will be free tier eligible")
-        print("      Key pair created if needed during create")
+        print("      Key pairs created locally and synchronized with AWS")
         print()
         return
 

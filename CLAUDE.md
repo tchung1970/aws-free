@@ -39,6 +39,7 @@ echo "AWS_SECRET_ACCESS_KEY=your_secret_access_key" >> ~/.env
 - **`create_security_group()`**: Creates/reuses security groups with SSH access
 - **`get_latest_ubuntu_ami()`**: Finds latest Ubuntu Server 24.04 LTS AMI
 - **`open_console()`**: Opens AWS EC2 console in browser for specified region
+- **`open_key_pairs()`**: Opens AWS Key Pairs console in browser for key management
 
 ### Free Tier Enforcement
 - **Single instance limit**: Prevents creation of multiple t3.micro instances
